@@ -17,6 +17,8 @@
 
 from lettuce.core import Scenario
 from lettuce.core import Feature
+from lettuce.core import Language
+
 from nose.tools import assert_equals
 
 FEATURE1 = """
@@ -306,3 +308,15 @@ def test_comments():
     feature = Feature.from_string(FEATURE10)
 
     assert_equals(feature.max_length, 55)
+
+def test_multiple_feature_keywords_language():
+    language = Language()
+    assert_equals(language.feature, 'Feature')
+
+    # add another keyword for feature
+    language.feature = 'Feature|Functional'
+    feature = Feature.from_string(FEATURE1, language=language)
+    assert_equals(
+        feature.name,
+        "Rent movies"
+    )
