@@ -310,11 +310,25 @@ def test_comments():
     assert_equals(feature.max_length, 55)
 
 def test_multiple_feature_keywords_language():
+    "Feature should passe if languege have multiple Feature keyword"
     language = Language()
     assert_equals(language.feature, 'Feature')
 
     # add another keyword for feature
     language.feature = 'Feature|Functional'
+    feature = Feature.from_string(FEATURE1, language=language)
+    assert_equals(
+        feature.name,
+        "Rent movies"
+    )
+
+def test_multiple_feature_2nd_keyword():
+    "Feature should passe if languege have multiple Feature keyword"
+    language = Language()
+    assert_equals(language.feature, 'Feature')
+
+    # add another keyword for feature
+    language.feature = 'Functional|Feature'
     feature = Feature.from_string(FEATURE1, language=language)
     assert_equals(
         feature.name,
