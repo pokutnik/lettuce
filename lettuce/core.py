@@ -163,7 +163,7 @@ class FeatureDescription(object):
         for pline, part in enumerate(lines):
             part = part.strip()
             line = pline + 1
-            if part.startswith(u"%s:" % language.first_of_feature):
+            if re.match(u"%s:" % language.feature, part):
                 self.line = line
             else:
                 for description in description_lines:
