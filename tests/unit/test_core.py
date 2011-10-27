@@ -99,6 +99,33 @@ def test_feature_description():
     assert_equals(description.line, 3)
     assert_equals(description.description_at, (5, 6))
 
+def test_feature_description_with_2nd_feature_keyword():
+    string = u'''
+    # lang: en-us
+    Feature: FEATURE NAME! #@@$%ˆ&*)(*%$E#
+    here comes
+    the description
+    of the scenario
+    really!
+    '''
+
+    class FakeFeature:
+        description = 'the description\nof the scenario\n'
+
+    lang = core.Language()
+    assert_equals(lang.feature, 'Feature')
+    lang.feature = 'Functional|Feature'
+
+    description = core.FeatureDescription(
+        FakeFeature, __file__, string, lang)
+
+    assert_equals(description.file, core.fs.relpath(__file__))
+    assert_not_equals(description.file, __file__)
+    assert_equals(description.line, 3)
+    assert_equals(description.description_at, (5, 6))
+
+
+
 
 def test_step_represent_string_when_not_defined():
     "Step.represent_string behaviour when not defined"
